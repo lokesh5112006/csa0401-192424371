@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <string.h>
+
+struct {
+    char dname[10];
+    char fname[10][10];
+    int fcnt;
+} dir[10];
+
+int main() {
+    int dc = 0, ch;
+    char d[10], f[10];
+    while (1) {
+        printf("\n1.Create Directory  2.Create File  3.Search File  4.Display  5.Exit\nEnter your choice: ");
+        scanf("%d", &ch);
+        switch (ch) {
+            case 1:
+                printf("Enter directory name: ");
+                scanf("%s", dir[dc].dname);
+                dir[dc].fcnt = 0;
+                dc++;
+                break;
+            case 2:
+                printf("Enter directory name: ");
+                scanf("%s", d);
+                for (int i = 0; i < dc; i++) {
+                    if (strcmp(d, dir[i].dname) == 0) {
+                        printf("Enter file name: ");
+                        scanf("%s", dir[i].fname[dir[i].fcnt]);
+                        dir[i].fcnt++;
+                        break;
+                    }
+                }
+                break;
+            case 3:
+                printf("Enter directory name: ");
+                scanf("%s", d);
+                printf("Enter file name: ");
+                scanf("%s", f);
+                for (int i = 0; i < dc; i++) {
+                    if (strcmp(d, dir[i].dname) == 0) {
+                        for (int j = 0; j < dir[i].fcnt; j++) {
+                            if (strcmp(f, dir[i].fname[j]) == 0) {
+                                printf("File found in directory %s\n", d);
+                                goto found;
+                            }
+                        }
+                    }
+                }
+                printf("File not found.\n");
+                found: break;
+            case 4:
+                for (int i = 0; i < dc; i++) {
+                    printf("Directory: %s\n", dir[i].dname);
+                    for (int j = 0; j < dir[i].fcnt; j++)
+                        printf("  %s\n", dir[i].fname[j]);
+                }
+                break;
+            case 5:
+                return 0;
+        }
+    }
+}
